@@ -5,6 +5,7 @@ import (
 	"fmt"
 	cw "github.com/griffin-stewie/go-chatwork"
 	"strconv"
+	"time"
 )
 
 var apiToken string
@@ -40,7 +41,11 @@ func main() {
 			}
 
 			for j := len(m) - 1; j >= len(m)-r[i].UnreadNum; j-- {
-				fmt.Printf("messages: %+v\n", m[j])
+				fmt.Printf("send time: %s\n", time.Unix(m[j].SendTime, 0))
+				fmt.Printf("update time: %s\n", time.Unix(m[j].UpdateTime, 0))
+				fmt.Printf("from: %s\n", m[j].Account.Name)
+				fmt.Printf("message: %s\n", m[j].Body)
+				fmt.Println("---")
 			}
 
 		}
