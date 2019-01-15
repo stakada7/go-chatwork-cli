@@ -1,2 +1,9 @@
-# for intellij
+# for intelliJ
 .idea
+
+# for dep
+Gopkg.lock
+vendor
+
+bin/*
+!bin/.gitkeep
