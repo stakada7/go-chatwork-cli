@@ -1,42 +1,41 @@
 package main
 
 import (
+	"fmt"
 	cw "github.com/griffin-stewie/go-chatwork"
-	"log"
+	"strconv"
 )
 
 func main() {
 
 	cw := cw.NewClient(`4d74d8bbb2c42c166156ccce2e6ab44e`)
-	log.Printf("%+v", cw.RateLimit())
-
-	m, err := cw.Me()
-	if err != nil {
-		log.Printf("%+v", err)
-	}
-	log.Printf("%+v", m)
+	fmt.Printf("Your rate limit: %+v\n", cw.RateLimit())
 
 	s, err := cw.MyStatus()
 	if err != nil {
-		log.Printf("%+v", err)
+		fmt.Printf("%+v\n", err)
 	}
-	log.Printf("%+v", s)
+	fmt.Printf("Your status: %+v\n", s)
 
-	t, err := cw.MyTasks(map[string]string{})
+	r, err := cw.Rooms()
 	if err != nil {
-		log.Printf("%+v", err)
+		fmt.Printf("%+v\n", err)
 	}
-	log.Printf("%+v", t)
+	for i := 0; i < len(r); i++ {
+		if r[i].UnreadNum > 0 {
+			fmt.Printf("room name: %+v\n", r[i].Name)
+			fmt.Printf("unread unmber: %+v\n", r[i].UnreadNum)
 
-	//c, err := cw.Contacts()
-	//if err != nil {
-	//	log.Printf("%+v", err)
-	//}
-	//log.Printf("%+v", c)
-	//
-	//r, err := cw.Rooms()
-	//if err != nil {
-	//	log.Printf("%+v", err)
-	//}
-	//log.Printf("%+v", r)
+			m, err := cw.RoomMessages(strconv.Itoa(r[i].RoomID), map[string]string{"force": "1"})
+			if err != nil {
+				fmt.Printf("%+v\n", err)
+			}
+
+			for j := len(m) - 1; j >= len(m)-r[i].UnreadNum; j-- {
+				fmt.Printf("messages: %+v\n", m[j])
+			}
+
+		}
+	}
+
 }
