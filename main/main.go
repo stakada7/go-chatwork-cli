@@ -5,6 +5,7 @@ import (
 	"fmt"
 	cw "github.com/griffin-stewie/go-chatwork"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -33,7 +34,11 @@ func main() {
 	if err != nil {
 		fmt.Printf("%+v\n", err)
 	}
-	fmt.Printf("Your status: %+v\n", s)
+	fmt.Printf("Unread: %d\n", s.UnreadNum)
+	fmt.Printf("Unread room: %d\n", s.UnreadRoomNum)
+	fmt.Printf("Mention: %d\n", s.MentionNum)
+	fmt.Printf("Mention room: %d\n", s.MentionRoomNum)
+	//fmt.Printf("%+v\n", s)
 
 	r, err := chatwork.Rooms()
 	if err != nil {
@@ -41,6 +46,9 @@ func main() {
 	}
 	for i := 0; i < len(r); i++ {
 		if r[i].UnreadNum > 0 {
+
+			fmt.Println()
+			fmt.Println("===")
 			fmt.Printf("room name: %+v\n", r[i].Name)
 			fmt.Printf("unread unmber: %+v\n", r[i].UnreadNum)
 
@@ -52,6 +60,18 @@ func main() {
 			for j := len(m) - r[i].UnreadNum; j < len(m); j++ {
 
 				fmt.Println("---")
+
+				fmt.Printf("send time: %s\n", time.Unix(m[j].SendTime, 0))
+				fmt.Printf("update time: %s\n", time.Unix(m[j].UpdateTime, 0))
+
+				if strings.LastIndex(m[j].Body, strconv.Itoa(accountId)) > 0 {
+					fmt.Printf("\x1b[31mfrom: %s\x1b[0m\n", m[j].Account.Name)
+					fmt.Printf("\x1b[31mmessage: %s\x1b[0m\n", m[j].Body)
+				} else {
+					fmt.Printf("from: %s\n", m[j].Account.Name)
+					fmt.Printf("message: %s\n", m[j].Body)
+				}
+
 			}
 
 		}
