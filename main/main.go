@@ -49,7 +49,7 @@ func main() {
 
 			fmt.Println()
 			fmt.Println("===")
-			fmt.Printf("room name: %+v\n", r[i].Name)
+			fmt.Printf("\x1b[35mroom name: %+v\x1b[0m\n", r[i].Name)
 			fmt.Printf("unread unmber: %+v\n", r[i].UnreadNum)
 
 			m, err := chatwork.RoomMessages(strconv.Itoa(r[i].RoomID), map[string]string{"force": "1"})
