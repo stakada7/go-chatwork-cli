@@ -9,16 +9,25 @@ import (
 )
 
 var apiToken string
+var chatwork *cw.Client
+var accountId int
 
 func init() {
 	flag.StringVar(&apiToken, "token", "", "Chatwork API key")
 	flag.Parse()
+
+	chatwork = cw.NewClient(apiToken)
+	fmt.Printf("Your rate limit: %d\n", chatwork.RateLimit().Remaining)
+
+	me, err := chatwork.Me()
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+	}
+	accountId = me.AccountID
+
 }
 
 func main() {
-
-	chatwork := cw.NewClient(apiToken)
-	fmt.Printf("Your rate limit: %+v\n", chatwork.RateLimit())
 
 	s, err := chatwork.MyStatus()
 	if err != nil {
