@@ -49,11 +49,8 @@ func main() {
 				fmt.Printf("%+v\n", err)
 			}
 
-			for j := len(m) - 1; j >= len(m)-r[i].UnreadNum; j-- {
-				fmt.Printf("send time: %s\n", time.Unix(m[j].SendTime, 0))
-				fmt.Printf("update time: %s\n", time.Unix(m[j].UpdateTime, 0))
-				fmt.Printf("from: %s\n", m[j].Account.Name)
-				fmt.Printf("message: %s\n", m[j].Body)
+			for j := len(m) - r[i].UnreadNum; j < len(m); j++ {
+
 				fmt.Println("---")
 			}
 
