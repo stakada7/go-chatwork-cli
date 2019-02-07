@@ -2,7 +2,6 @@
 .idea
 
 # for dep
-Gopkg.lock
 vendor
 
 bin/*
