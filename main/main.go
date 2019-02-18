@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	cw "github.com/griffin-stewie/go-chatwork"
 	"strconv"
 	"strings"
 	"time"
+
+	cw "github.com/griffin-stewie/go-chatwork"
 )
 
 var apiToken string
@@ -25,6 +26,24 @@ func init() {
 		fmt.Printf("%+v\n", err)
 	}
 	accountID = me.AccountID
+
+}
+
+func getMyTasks() {
+
+	p := map[string]string{"assigned_by_account_id": strconv.Itoa(accountID), "status": "open"}
+
+	t, err := chatwork.MyTasks(p)
+	if err != nil {
+		fmt.Printf("%+v\n", err)
+	}
+
+	fmt.Println()
+	fmt.Println("\x1b[35m=== Tasks ===\x1b[0m\n")
+
+	for i := 0; i < len(t); i++ {
+		fmt.Printf("%+v: %+v [%+v]\n", t[i].Room.Name, t[i].Task.Body, t[i].Task.LimitDate())
+	}
 
 }
 
@@ -75,5 +94,7 @@ func main() {
 
 		}
 	}
+
+	getMyTasks()
 
 }
