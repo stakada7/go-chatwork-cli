@@ -3,11 +3,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:c5de889e4c4779286952c90255addd553f087fa9cac62dee1ea671efb7623076"
+  digest = "1:0eee43f0b824af2cc8b8320f6d345b6ce107546f29ae41a75fdad7acc8dda5e9"
   name = "github.com/griffin-stewie/go-chatwork"
   packages = ["."]
   pruneopts = "UT"
-  revision = "072f7abdec14d31d804cb6ba443d097a622cf6ac"
+  revision = "de7673a5e1a7368d700b70f46cc7faceb5f4d2a9"
 
 [solve-meta]
   analyzer-name = "dep"
